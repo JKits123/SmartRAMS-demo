@@ -1,68 +1,41 @@
+
 document.addEventListener("DOMContentLoaded", () => {
-  const formSection = document.getElementById("form-section");
-  const outputSection = document.getElementById("output-section");
+    const hazards = [
+        { id: "working-at-height", name: "Working at Height", mitigation: "Use fall protection, assess weather, inspect ladders" },
+        { id: "manual-handling", name: "Manual Handling", mitigation: "Train staff, use aids, reduce load weight" },
+        { id: "electrical-tools", name: "Electrical Tools", mitigation: "110V only, PAT tested, visual checks before use" }
+    ];
 
-  // Define sample hazards
-  const hazards = [
-    {
-      category: "Physical",
-      name: "Manual Handling",
-      riskBefore: "High",
-      mitigation: "Use lifting aids and team lifts.",
-      riskAfter: "Low"
-    },
-    {
-      category: "Environmental",
-      name: "Dust Inhalation",
-      riskBefore: "Medium",
-      mitigation: "Wear dust mask, ensure ventilation.",
-      riskAfter: "Low"
-    }
-  ];
+    const formSection = document.getElementById("form-section");
+    const outputSection = document.getElementById("output-section");
 
-  // Generate checkboxes
-  formSection.innerHTML = "<h2>Select Hazards:</h2>";
-  hazards.forEach((hazard, index) => {
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = `hazard-${index}`;
-    checkbox.dataset.index = index;
+    const form = document.createElement("form");
 
-    const label = document.createElement("label");
-    label.htmlFor = `hazard-${index}`;
-    label.textContent = `${hazard.category} - ${hazard.name}`;
-
-    const br = document.createElement("br");
-
-    formSection.appendChild(checkbox);
-    formSection.appendChild(label);
-    formSection.appendChild(br);
-
-    checkbox.addEventListener("change", () => {
-      renderOutput(hazards.filter((_, i) =>
-        document.getElementById(`hazard-${i}`).checked
-      ));
+    hazards.forEach(hazard => {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = hazard.id;
+        checkbox.dataset.mitigation = hazard.mitigation;
+        label.appendChild(checkbox);
+        label.append(` ${hazard.name}`);
+        form.appendChild(label);
+        form.appendChild(document.createElement("br"));
     });
-  });
 
-  function renderOutput(selectedHazards) {
-    outputSection.innerHTML = "<h2>RAMS Summary</h2>";
-    if (selectedHazards.length === 0) {
-      outputSection.innerHTML += "<p>No hazards selected.</p>";
-      return;
-    }
+    const generateBtn = document.createElement("button");
+    generateBtn.textContent = "Generate RAMS";
+    generateBtn.type = "button";
 
-    selectedHazards.forEach(hazard => {
-      outputSection.innerHTML += `
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px">
-          <strong>Hazard:</strong> ${hazard.name} <br>
-          <strong>Category:</strong> ${hazard.category} <br>
-          <strong>Risk Before:</strong> ${hazard.riskBefore} <br>
-          <strong>Mitigation:</strong> ${hazard.mitigation} <br>
-          <strong>Risk After:</strong> ${hazard.riskAfter}
-        </div>
-      `;
-    });
-  }
+    generateBtn.onclick = () => {
+        const selected = Array.from(form.querySelectorAll("input:checked"));
+        const output = selected.map(cb => {
+            return `<h3>${cb.value.replaceAll("-", " ")}</h3><p>${cb.dataset.mitigation}</p>`;
+        }).join("");
+        outputSection.innerHTML = "<h2>Generated RAMS Content</h2>" + output;
+    };
+
+    form.appendChild(document.createElement("br"));
+    form.appendChild(generateBtn);
+    formSection.appendChild(form);
 });
-

@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Smart RAMS Generator</title>
+    <title>Smart RAMS Generator - Phase 2</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="app.js"></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
     <header>
@@ -13,8 +11,15 @@
         <h1>Smart RAMS Generator</h1>
     </header>
     <main>
-        <div id="form-section"></div>
-        <div id="output-section"></div>
+        <section id="form-section">
+            <h2>Select Hazards</h2>
+            <div id="hazard-checkboxes"></div>
+            <button onclick="generateRAMS()">Generate RAMS</button>
+        </section>
+        <section id="output-section">
+            <h2>Generated RAMS Content</h2>
+            <div id="rams-output"></div>
+        </section>
     </main>
 </body>
 </html>

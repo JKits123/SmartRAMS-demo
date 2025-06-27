@@ -1,20 +1,5 @@
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
-
-header {
-    background-color: #003366;
-    color: white;
-    padding: 10px;
-    text-align: center;
-}
-
-#form-section, #output-section {
-    margin-top: 20px;
-    padding: 15px;
-    background: white;
-    border-radius: 5px;
-}
+body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+header { background: #003366; color: white; padding: 1em; text-align: center; }
+main { padding: 1em; }
+button { margin-top: 1em; padding: 10px 20px; }
